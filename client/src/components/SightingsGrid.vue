@@ -1,19 +1,25 @@
 <template lang="html">
-	<div id="sightingsGrid">
-		<sighting v-for="sighting in sightings" :sighting="sighting" />
-	</div>
+  <div id="sightingsGrid">
+    <sighting
+      v-for="(sighting, index) in sightings"
+      :key="index"
+      :sighting="sighting"
+    />
+  </div>
 </template>
 
 <script>
-import Sighting from './Sighting';
+import { eventBus } from "@/main.js";
+import SightingService from "@/services/SightingService.js";
+import Sighting from "./Sighting";
 
 export default {
-	name: 'sightings-grid',
-	components: {
-		'sighting': Sighting
-	},
-	props: ['sightings']
-}
+  name: "sightings-grid",
+  components: {
+    sighting: Sighting,
+  },
+  props: ["sightings"],
+};
 </script>
 
 <style lang="css" scoped>

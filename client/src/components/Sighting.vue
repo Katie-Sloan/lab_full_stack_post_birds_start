@@ -1,25 +1,31 @@
 <template lang="html">
   <div class="sighting">
     <h2>{{ sighting.species }}</h2>
-    <p>{{ sighting.location }} on {{ sighting.date|formatDate }}</p>
+    <p>{{ sighting.location }} on {{ sighting.date | formatDate }}</p>
 
-    <button>Delete Sighting</button>
+    <button v-on:click="deleteSighting">Delete Sighting</button>
   </div>
 </template>
 
 <script>
+import { eventBus } from "@/main.js";
+import SightingService from "../services/SightingService";
 export default {
-  name: 'sighting',
-  props: ['sighting'],
+  name: "sighting",
+  props: ["sighting"],
   filters: {
     formatDate(value) {
       return new Date(value).toLocaleString().substring(0, 10);
-    }
+    },
   },
   methods: {
-
-  }
-}
+    deleteSighting() {
+      SightingService.deleteSighting(this.sighting._id).then(() =>
+        eventBus.$emit("sighting-deleted", this.sighting._id)
+      );
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>
